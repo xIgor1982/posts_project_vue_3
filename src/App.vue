@@ -1,7 +1,10 @@
 <template>
 	<div class="app">
 		<h1>Страница с постами</h1>
-		<my-button @click="shwDialog" style="margin: 15px 0;">Создать пост</my-button>
+		<my-button @click="fetchPosts">Получить посты</my-button>
+		<my-button @click="shwDialog" style="margin: 15px 0"
+			>Создать пост</my-button
+		>
 		<my-dialog v-model:show="dialogVisible">
 			<post-form @create="createPost" />
 		</my-dialog>
@@ -13,17 +16,14 @@
 import { v4 as uuidv4 } from 'uuid';
 import PostForm from '@/components/PostForm.vue';
 import PostList from '@/components/PostList.vue';
-import MyButton from './components/UI/MyButton.vue';
+import MyButton from '@/components/UI/MyButton.vue';
+import axios from 'axios';
+
 export default {
 	components: { PostForm, PostList, MyButton },
 	data() {
 		return {
-			posts: [
-				{ id: uuidv4(), title: 'Javascript', body: 'Описание поста' },
-				{ id: uuidv4(), title: 'Javascript 2', body: 'Описание поста 2' },
-				{ id: uuidv4(), title: 'Javascript 3', body: 'Описание поста 3' },
-				{ id: uuidv4(), title: 'Javascript 4', body: 'Описание поста 4' },
-			],
+			posts: [],
 			dialogVisible: false,
 		};
 	},
@@ -37,7 +37,17 @@ export default {
 		},
 		shwDialog() {
 			this.dialogVisible = true;
-		}
+		},
+		async fetchPosts() {
+			try {
+				const response = await axios.get(
+					'http://jsonplaceholder.typicode.com/posts?_limit=10'
+				);
+				this.posts = response.data;
+			} catch (e) {
+				alert('Ошибка соединения');
+			}
+		},
 	},
 };
 </script>
