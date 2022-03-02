@@ -3,7 +3,7 @@
 		<h1>Страница с постами</h1>
 		<div class="btns">
 			<my-button @click="shwDialog"> Создать пост </my-button>
-			<my-select v-model="selectedSort" :options='sortOptions' />
+			<my-select v-model="selectedSort" :options="sortOptions" />
 		</div>
 		<my-dialog v-model:show="dialogVisible">
 			<post-form @create="createPost" />
@@ -66,6 +66,15 @@ export default {
 	},
 	mounted() {
 		this.fetchPosts();
+	},
+	watch: {
+		selectedSort(newValue) {
+			this.posts.sort((post1, post2) => {
+				return post1[newValue]?.localeCompare(
+					post2[newValue]
+				);
+			});
+		},
 	},
 };
 </script>
