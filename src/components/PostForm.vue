@@ -13,7 +13,7 @@
 			type="text"
 			placeholder="Описание"
 		/>
-		<button class="btn" @click="createPost">Создать</button>
+		<my-button class="btn" @click="createPost">Создать</my-button>
 	</form>
 </template>
 
@@ -42,15 +42,6 @@ export default {
 </script>
 
 <style scoped>
-.btn {
-	margin-top: 15px;
-	align-self: flex-end;
-	padding: 10px 15px;
-	background: none;
-	color: teal;
-	border: 1px solid teal;
-}
-
 .form {
 	display: flex;
 	flex-direction: column;
@@ -60,6 +51,11 @@ export default {
 	width: 100%;
 	border: 1px solid teal;
 	padding: 10px 15px;
+	margin-top: 15px;
+}
+
+.btn {
+	align-self: flex-end;
 	margin-top: 15px;
 }
 </style>
