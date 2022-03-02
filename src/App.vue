@@ -1,6 +1,10 @@
 <template>
 	<div class="app">
-		<post-form @create="createPost" />
+		<h1>Страница с постами</h1>
+		<my-button @click="shwDialog" style="margin: 15px 0;">Создать пост</my-button>
+		<my-dialog v-model:show="dialogVisible">
+			<post-form @create="createPost" />
+		</my-dialog>
 		<post-list :posts="posts" @remove="removePost" />
 	</div>
 </template>
@@ -9,8 +13,9 @@
 import { v4 as uuidv4 } from 'uuid';
 import PostForm from '@/components/PostForm.vue';
 import PostList from '@/components/PostList.vue';
+import MyButton from './components/UI/MyButton.vue';
 export default {
-	components: { PostForm, PostList },
+	components: { PostForm, PostList, MyButton },
 	data() {
 		return {
 			posts: [
@@ -19,15 +24,20 @@ export default {
 				{ id: uuidv4(), title: 'Javascript 3', body: 'Описание поста 3' },
 				{ id: uuidv4(), title: 'Javascript 4', body: 'Описание поста 4' },
 			],
+			dialogVisible: false,
 		};
 	},
 	methods: {
 		createPost(post) {
 			this.posts.push(post);
+			this.dialogVisible = false;
 		},
 		removePost(post) {
 			this.posts = this.posts.filter((p) => p.id !== post.id);
 		},
+		shwDialog() {
+			this.dialogVisible = true;
+		}
 	},
 };
 </script>
