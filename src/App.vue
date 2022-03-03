@@ -1,6 +1,7 @@
 <template>
 	<div class="app">
 		<h1>Страница с постами</h1>
+		<my-input v-model="searchQuery" placeholder="Поиск..." />
 		<div class="btns">
 			<my-button @click="shwDialog"> Создать пост </my-button>
 			<my-select v-model="selectedSort" :options="sortOptions" />
@@ -8,7 +9,11 @@
 		<my-dialog v-model:show="dialogVisible">
 			<post-form @create="createPost" />
 		</my-dialog>
-		<post-list :posts="sortedPosts" @remove="removePost" v-if="!isPostLoading" />
+		<post-list
+			:posts="sortedAndSearchedPosts"
+			@remove="removePost"
+			v-if="!isPostLoading"
+		/>
 		<div v-else>
 			<img
 				style="width: 80px; height: 80px"
@@ -33,6 +38,7 @@ export default {
 			dialogVisible: false,
 			isPostLoading: false,
 			selectedSort: '',
+			searchQuery: '',
 			sortOptions: [
 				{ value: 'title', name: 'По значению' },
 				{ value: 'body', name: 'По содержанию' },
@@ -74,6 +80,11 @@ export default {
 					post2[this.selectedSort]
 				);
 			});
+		},
+		sortedAndSearchedPosts() {
+			return this.sortedPosts.filter((post) =>
+				post.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+			);
 		},
 	},
 };
