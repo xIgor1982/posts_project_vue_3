@@ -3,6 +3,7 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import components from '@/components/UI/index';
 import router from '@/components/router/router';
+import directives from '@/directives/index';
 
 const app = createApp(App);
 
@@ -10,8 +11,12 @@ components.forEach((component) => {
 	app.component(component.name, component);
 });
 
-app
-.use(router)
-.mount('#app');
+directives.forEach((directive) => {
+	app.directive(directive.name, directive);
+});
+
+// app.directive('intersection', VIntersection);
+
+app.use(router).mount('#app');
 
 // import 'bootstrap/dist/js/bootstrap.js';
