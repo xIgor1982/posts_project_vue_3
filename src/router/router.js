@@ -2,6 +2,7 @@ import Main from '@/pages/Main.vue';
 import PostPage from '@/pages/PostPage.vue';
 import About from '@/pages/About.vue';
 import PostIdPage from '@/pages/PostIdPage.vue';
+import PostPageWithStore from '@/pages/PostPageWithStore.vue';
 
 import { createRouter, createWebHistory } from 'vue-router';
 
@@ -22,7 +23,10 @@ const routes = [
 		path: '/about',
 		component: About,
 	},
-	
+	{
+		path: '/store',
+		component: PostPageWithStore,
+	},
 ];
 
 const router = createRouter({
