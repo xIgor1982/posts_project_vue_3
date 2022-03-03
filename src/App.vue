@@ -72,7 +72,6 @@ export default {
 		},
 		changePage(pageNum) {
 			this.page = pageNum;
-			this.fetchPosts();
 		},
 		async fetchPosts() {
 			try {
@@ -99,7 +98,7 @@ export default {
 	},
 	mounted() {
 		this.fetchPosts();
-	},
+	},	
 	computed: {
 		sortedPosts() {
 			return [...this.posts].sort((post1, post2) => {
@@ -114,6 +113,11 @@ export default {
 			);
 		},
 	},
+	watch: {
+		page() {
+			this.fetchPosts();
+		}
+	}
 };
 </script>
 
